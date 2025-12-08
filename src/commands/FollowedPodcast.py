@@ -1,9 +1,6 @@
 from .Command import Command
 from Config import getCommandName, getSetting
 from Util import parseSearchQuery
-import dbus.service
-
-iface = "org.kde.krunner1"
 
 class FollowedPodcast(Command):
     def __init__(self, spotify):

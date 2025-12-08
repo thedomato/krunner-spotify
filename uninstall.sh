@@ -10,4 +10,4 @@ rm ~/.config/KRunner-Spotify/KRunner-Spotify.config
 
 #Deletes cache from the default CACHE_PATH, has to be manually deleted if changed
 rm ~/.cache/KRunnerSpotify/.cache
-kquitapp5 krunner
+kquitapp6 krunner

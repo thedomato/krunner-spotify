@@ -1,17 +1,23 @@
+import os
+import sys
+
+# Add the src directory to Python path so imports work when run via D-Bus
+script_dir = os.path.dirname(os.path.abspath(__file__))
+if script_dir not in sys.path:
+    sys.path.insert(0, script_dir)
+
 from commands import Commands
 from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
-from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2 import SpotifyPKCE
 from Config import getCommandName, getSetting
 import dbus.service
 import spotipy
-import os
 
 DBusGMainLoop(set_as_default=True)
 
 objpath = "/KRunnerSpotify"
-iface = "org.kde.krunner1"
+iface = "org.kde.krunner2"
 
 
 class Runner(dbus.service.Object):

@@ -13,4 +13,4 @@ cp KRunner-Spotify.config ~/.config/KRunner-Spotify/
 cp plasma-runner-KRunnerSpotify.desktop ~/.local/share/kservices5/
 sed "s|%{PROJECTDIR}/KRunnerSpotify.py|${PWD}/src/KRunnerSpotify.py|" "org.kde.KRunnerSpotify.service" > ~/.local/share/dbus-1/services/org.kde.KRunnerSpotify.service
 
-kquitapp5 krunner
+kquitapp6 krunner
