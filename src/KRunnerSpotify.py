@@ -17,7 +17,8 @@ import spotipy
 DBusGMainLoop(set_as_default=True)
 
 objpath = "/KRunnerSpotify"
-iface = "org.kde.krunner2"
+iface1 = "org.kde.krunner1"
+iface2 = "org.kde.krunner2"
 
 
 class Runner(dbus.service.Object):
@@ -32,8 +33,7 @@ class Runner(dbus.service.Object):
                                         scope=getSetting("ACCES_SCOPE"))
         self.spotify = spotipy.Spotify(auth_manager=self.auth_manager)
 
-    @dbus.service.method(iface, in_signature="s", out_signature="a(sssida{sv})")
-    def Match(self, query: str):
+    def _match_impl(self, query: str):
         arguments = ""
         if(" " in query):
             command, arguments = query.split(" ", 1)
@@ -47,8 +47,7 @@ class Runner(dbus.service.Object):
             if(str(e) == "Not logged in!"):
                 return [(getCommandName("LOGIN_COMMAND"), "Not logged in, click to login", "Spotify", 100, 100, {})]
 
-    @dbus.service.method(iface, in_signature="ss")
-    def Run(self, data: str, action_id: str):
+    def _run_impl(self, data: str, action_id: str):
         command = data
         if(" " in data):
             command, data = data.split(" ", 1)
@@ -58,6 +57,17 @@ class Runner(dbus.service.Object):
             Commands.executeCommand(command, self.spotify).Run(data)
         except RuntimeError as e:
             print(e)
+
+    # Support both krunner1 (Plasma 6) and krunner2 (Plasma 5) interfaces
+    @dbus.service.method(iface1, in_signature="s", out_signature="a(sssida{sv})")
+    @dbus.service.method(iface2, in_signature="s", out_signature="a(sssida{sv})")
+    def Match(self, query: str):
+        return self._match_impl(query)
+
+    @dbus.service.method(iface1, in_signature="ss")
+    @dbus.service.method(iface2, in_signature="ss")
+    def Run(self, data: str, action_id: str):
+        self._run_impl(data, action_id)
 
 
 runner = Runner()
