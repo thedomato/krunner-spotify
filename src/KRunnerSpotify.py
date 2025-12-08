@@ -34,6 +34,13 @@ class Runner(dbus.service.Object):
         self.spotify = spotipy.Spotify(auth_manager=self.auth_manager)
 
     def _match_impl(self, query: str):
+        # Check if query starts with "sp " prefix
+        if not query.lower().startswith("sp "):
+            return []
+        
+        # Remove "sp " prefix
+        query = query[3:]
+        
         arguments = ""
         if(" " in query):
             command, arguments = query.split(" ", 1)
@@ -48,6 +55,10 @@ class Runner(dbus.service.Object):
                 return [(getCommandName("LOGIN_COMMAND"), "Not logged in, click to login", "Spotify", 100, 100, {})]
 
     def _run_impl(self, data: str, action_id: str):
+        # Remove "sp " prefix if present
+        if data.lower().startswith("sp "):
+            data = data[3:]
+        
         command = data
         if(" " in data):
             command, data = data.split(" ", 1)
