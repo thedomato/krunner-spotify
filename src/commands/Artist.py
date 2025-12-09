@@ -1,6 +1,6 @@
 from .Command import Command
 from Config import getCommandName, getSetting
-from Util import parseSearchQuery, parseArtists
+from Util import parseSearchQuery, parseArtists, handle_spotify_uri
 
 
 class Artist(Command):
@@ -21,4 +21,4 @@ class Artist(Command):
         return parseArtists(searchResults)
 
     def Run(self, data: str):
-        raise NotImplementedError
+        handle_spotify_uri(self.spotify, data)

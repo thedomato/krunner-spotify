@@ -17,6 +17,8 @@ from .FastForward import FastForward
 from .Rewind import Rewind
 from .Seek import Seek
 from .SetVolume import SetVolume
+from .Artist import Artist
+from .Song import Song
 from Config import getCommandName
 
 
@@ -59,3 +61,7 @@ def executeCommand(command, spotify):
         return Seek(spotify)
     elif(command == getCommandName("SET_VOLUME_COMMAND")):
         return SetVolume(spotify)
+    elif(command == getCommandName("PLAY_ARTIST_COMMAND")):
+        return Artist(spotify)
+    elif(command == getCommandName("PLAY_SONG_COMMAND")):
+        return Song(spotify)
