@@ -1,4 +1,5 @@
 import re
+import webbrowser
 
 
 def parseSearchQuery(query):
@@ -55,3 +56,42 @@ def parsePlaylists(playlists):
         parsedResults.append(
             ("", "No playlists found!", "Spotify", 100, 100, {}))
     return parsedResults
+
+
+def parse_spotify_uri(uri: str):
+    """
+    Parse a Spotify URI into its components.
+    
+    Args:
+        uri: Spotify URI in format 'spotify:type:id'
+    """
+    parts = uri.split(':')
+    if len(parts) != 3 or parts[0] != 'spotify':
+        raise ValueError(f"Invalid Spotify URI format: {uri}")
+    return parts[0], parts[1], parts[2]
+
+
+def handle_spotify_uri(spotify, uri: str):
+    """
+    Handle playback of a Spotify URI. If no active playback session exists, opens the URI in a web browser.
+    Otherwise, starts playback using the Spotify API.
+    
+    Args:
+        spotify: Spotipy client instance
+        uri: Spotify URI to play
+    """
+    _, uri_type, uri_id = parse_spotify_uri(uri)
+    
+    if not spotify.current_playback():
+        # No active playback - open in browser
+        webbrowser.open(f"https://open.spotify.com/{uri_type}/{uri_id}")
+    else:
+        # Active playback - use API
+        if uri_type in ('track', 'episode'):
+            # Tracks and episodes need to be wrapped in a list for uris parameter
+            spotify.start_playback(uris=[uri])
+        elif uri_type in ('artist', 'playlist', 'album', 'show'):
+            # Context URIs (artist, playlist, album, show) use context_uri parameter
+            spotify.start_playback(context_uri=uri)
+        else:
+            raise ValueError(f"Unsupported URI type: {uri_type}")

@@ -11,6 +11,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
 from spotipy.oauth2 import SpotifyPKCE
 from Config import getCommandName, getSetting
+from Util import handle_spotify_uri
 import dbus.service
 import spotipy
 
@@ -55,7 +56,12 @@ class Runner(dbus.service.Object):
                 return [(getCommandName("LOGIN_COMMAND"), "Not logged in, click to login", "Spotify", 100, 100, {})]
 
     def _run_impl(self, data: str, action_id: str):
-        # Remove "sp " prefix if present
+        # If data is a Spotify URI (from search results), handle it directly
+        if data.startswith("spotify:"):
+            handle_spotify_uri(self.spotify, data)
+            return
+        
+        # Otherwise, treat as a command - remove "sp " prefix if present
         if data.lower().startswith("sp "):
             data = data[3:]
         
