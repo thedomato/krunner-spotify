@@ -82,8 +82,9 @@ def handle_spotify_uri(spotify, uri: str):
     """
     _, uri_type, uri_id = parse_spotify_uri(uri)
     
-    if not spotify.current_playback():
-        # No active playback - open in browser
+    devices = spotify.devices()
+    if not devices or not devices.get("devices"):
+        # No available devices - open in browser
         webbrowser.open(f"https://open.spotify.com/{uri_type}/{uri_id}")
     else:
         # Active playback - use API
