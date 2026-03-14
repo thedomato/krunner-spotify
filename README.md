@@ -43,7 +43,8 @@ The installer will create a virtual environment and install all required depende
 
 ## Spotify Developer Setup
 
-> **Required before first use.** The plugin needs a Spotify Developer app to authenticate with the Spotify Web API.
+> [!IMPORTANT]
+> Required before first use. The plugin needs a Spotify Developer app to authenticate with the Spotify Web API.
 
 1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in
 2. Click **Create app**
@@ -53,12 +54,13 @@ The installer will create a virtual environment and install all required depende
    ```
 4. Under **APIs used**, select **Web API**
 5. Save the app, open its settings, and copy the **Client ID**
-6. Paste it into `~/.config/KRunner-Spotify/KRunner-Spotify.config` under `[Spotify]`:
+6. Paste it into `~/.config/KRunner-Spotify/KRunner-Spotify.config` under `[Settings]`:
    ```ini
    CLIENT_ID = your_client_id_here
    ```
 
-> **Note (February 2026):** Spotify limits developers to 1 app in development mode. If you already have an existing Spotify app (e.g. for Home Assistant), you can reuse it — just add `http://127.0.0.1:3000/callback` as an additional Redirect URI rather than creating a new app.
+> [!NOTE]
+> **As of February 2026**, Spotify limits developers to 1 app in development mode. If you already have an existing Spotify app (e.g. for Home Assistant), you can reuse it — just add your loopback callback URL as an additional Redirect URI rather than creating a new app.
 
 ## Uninstall
 
@@ -85,6 +87,8 @@ sp play <track name>
 sp song <search query>
 sp artist <artist name>
 sp playlist <playlist name>
+```
+
 ## Debugging
 
 To run the plugin in debug mode and see console output:
