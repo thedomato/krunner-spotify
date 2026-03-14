@@ -40,7 +40,7 @@ class Play(Command):
         devices = self.spotify.devices()
         if not devices or not devices.get("devices"):
             data = data.split(':')
-            webbrowser.open("https://open.spotify.com/track/" + data[2])
+            webbrowser.open("https://open.spotify.com/" + data[1] + "/" + data[2])
         elif("track" in data or "episode" in data):
             self.spotify.start_playback(uris=[data])
         elif("show" in data or "artist" in data or "playlist" in data):
