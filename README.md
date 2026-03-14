@@ -41,6 +41,25 @@ The installer will create a virtual environment and install all required depende
    * Add it to your **Favorites** and move it to the **top** of the favorites list
    * This ensures Spotify results always appear first when using the `sp` prefix
 
+## Spotify Developer Setup
+
+> **Required before first use.** The plugin needs a Spotify Developer app to authenticate with the Spotify Web API.
+
+1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in
+2. Click **Create app**
+3. Fill in any name/description, then under **Redirect URIs** add:
+   ```
+   http://127.0.0.1:3000/callback
+   ```
+4. Under **APIs used**, select **Web API**
+5. Save the app, open its settings, and copy the **Client ID**
+6. Paste it into `~/.config/KRunner-Spotify/KRunner-Spotify.config` under `[Spotify]`:
+   ```ini
+   CLIENT_ID = your_client_id_here
+   ```
+
+> **Note (February 2026):** Spotify limits developers to 1 app in development mode. If you already have an existing Spotify app (e.g. for Home Assistant), you can reuse it — just add `http://127.0.0.1:3000/callback` as an additional Redirect URI rather than creating a new app.
+
 ## Uninstall
 
 Navigate to the repository directory and run:
