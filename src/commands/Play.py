@@ -37,7 +37,8 @@ class Play(Command):
             return [("", "Invalid command", "Spotify", 100, 100, {})]
 
     def Run(self, data: str):
-        if(not self.spotify.current_playback()):
+        devices = self.spotify.devices()
+        if not devices or not devices.get("devices"):
             data = data.split(':')
             webbrowser.open("https://open.spotify.com/track/" + data[2])
         elif("track" in data or "episode" in data):
