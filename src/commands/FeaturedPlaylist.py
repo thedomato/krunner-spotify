@@ -8,11 +8,7 @@ class FeaturedPlaylist(Command):
         super().__init__(getCommandName("PLAY_FEATURED_PLAYLIST_COMMAND"), spotify)
 
     def Match(self, query: str):
-        query, page = parseSearchQuery(query)
-        playlistOffset = int(getSetting("MAX_RESULTS")) * (page - 1)
-        searchResults = self.spotify.featured_playlists(
-            limit=int(getSetting("MAX_RESULTS")), offset=playlistOffset)
-        return parsePlaylists(searchResults["playlists"])
+        return [("", "Featured playlists unavailable: Spotify removed this API endpoint. Use 'sp play myplaylist' to browse your own playlists.", "Spotify", 100, 100, {})]
 
     def Run(self, data: str):
         raise NotImplementedError
