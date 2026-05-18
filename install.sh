@@ -26,4 +26,10 @@ cp KRunner-Spotify.config ~/.config/KRunner-Spotify/
 cp plasma-runner-KRunnerSpotify.desktop ~/.local/share/krunner/dbusplugins/
 sed -e "s|%{PROJECTDIR}|${PWD}|g" "org.kde.KRunnerSpotify.service" > ~/.local/share/dbus-1/services/org.kde.KRunnerSpotify.service
 
-kquitapp6 krunner
+# dbus-broker only loads new ~/.local/share/dbus-1/services/ files after reload
+if systemctl --user is-active dbus-broker.service &>/dev/null; then
+    systemctl --user reload dbus-broker.service
+fi
+
+pkill -f KRunnerSpotify.py 2>/dev/null || true
+kquitapp6 krunner 2>/dev/null || true

@@ -15,6 +15,10 @@ mkdir -p ~/.local/share/dbus-1/services/
 cp plasma-runner-KRunnerSpotify.desktop ~/.local/share/krunner/dbusplugins/
 sed -e "s|%{PROJECTDIR}|${PWD}|g" "org.kde.KRunnerSpotify.service" > ~/.local/share/dbus-1/services/org.kde.KRunnerSpotify.service
 
+if systemctl --user is-active dbus-broker.service &>/dev/null; then
+    systemctl --user reload dbus-broker.service
+fi
+
 # Kill existing processes
 echo "Stopping existing KRunner and plugin processes..."
 pkill -9 -f KRunnerSpotify.py 2>/dev/null || true

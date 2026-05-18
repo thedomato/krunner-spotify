@@ -43,7 +43,7 @@ class Play(Command):
             return Artist(self.spotify)
         elif(command == getCommandName('PLAY_SONG_COMMAND')):
             return Song(self.spotify)
-        elif(command == getCommandName('PLAY_SONG_BY_ARTIST_COMMAND')):
+        elif(command == getCommandName('PLAY_ARTIST_SONG_COMMAND')):
             return ArtistSong(self.spotify)
         elif(command == getCommandName('PLAY_FEATURED_PLAYLIST_COMMAND')):
             return FeaturedPlaylist(self.spotify)

@@ -4,7 +4,7 @@ from Util import parseSearchQuery, parseTracks
 
 class ArtistSong(Command):
     def __init__(self, spotify):
-        super().__init__(getCommandName("PLAY_SONG_BY_ARTIST_COMMAND"), spotify)
+        super().__init__(getCommandName("PLAY_ARTIST_SONG_COMMAND"), spotify)
 
     def Match(self, query: str):
         query, page = parseSearchQuery(query)

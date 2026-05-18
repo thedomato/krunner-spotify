@@ -19,7 +19,7 @@ def parsePage(query):
     page = 1
     if (query == ""):
         return page
-    m = re.search('p(\d+)', query)
+    m = re.search(r'p(\d+)', query)
     return m.group(1)
 
 def parseArtists(results):

@@ -33,6 +33,6 @@ class AddToQueue(Command):
             command = command.upper()
         if(command == getCommandName("PLAY_SONG_COMMAND")):
             return Song(self.spotify)
-        elif(command == getCommandName("PLAY_SONG_BY_ARTIST_COMMAND")):
+        elif(command == getCommandName("PLAY_ARTIST_SONG_COMMAND")):
             return ArtistSong(self.spotify)
         raise RuntimeError("Incorrect command")

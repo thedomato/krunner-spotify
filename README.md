@@ -115,12 +115,17 @@ sp editconfig
 
 **Plugin not appearing:**
 
+On systems using **dbus-broker** (common on Arch and CachyOS), newly installed D-Bus service files are not picked up until the broker is reloaded or you log out and back in:
+
 ```sh
+systemctl --user reload dbus-broker.service
 pkill -9 -f KRunnerSpotify.py
 kquitapp6 krunner
 ```
 
-Then try opening KRunner again.
+Then open KRunner again and try a command such as `sp play`.
+
+**Note:** `debug.sh` runs the plugin directly in the foreground; that bypasses D-Bus activation. After you stop it, KRunner relies on D-Bus to start the plugin on demand — which only works if the service file is registered (see above).
 
 ## License
 
