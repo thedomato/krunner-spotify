@@ -14,10 +14,8 @@ class Playlist(Command):
             playlistOffset = int(getSetting("MAX_RESULTS")) * (page - 1)
             searchResults = self.spotify.search(
                 query, int(getSetting("MAX_RESULTS")), playlistOffset, "playlist")
-        else:
-            searchResults = self.spotify.featured_playlists(
-                limit=int(getSetting("MAX_RESULTS")))
-        return parsePlaylists(searchResults["playlists"])
+            return parsePlaylists(searchResults["playlists"])
+        return [("", "Enter a playlist name to search", "Spotify", 100, 100, {})]
 
     def Run(self, data: str):
         raise NotImplementedError

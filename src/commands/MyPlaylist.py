@@ -9,10 +9,9 @@ class MyPlaylist(Command):
 
     def Match(self, query: str):
         query, page = parseSearchQuery(query)
-        user = self.spotify.current_user()
         playlistOffset = int(getSetting("MAX_RESULTS")) * (page - 1)
-        playlists = self.spotify.user_playlists(
-            user["id"], int(getSetting("MAX_RESULTS")), playlistOffset)
+        playlists = self.spotify.current_user_playlists(
+            limit=int(getSetting("MAX_RESULTS")), offset=playlistOffset)
         return parsePlaylists(playlists)
 
     def Run(self, data: str):
