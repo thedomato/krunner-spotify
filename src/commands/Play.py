@@ -10,10 +10,7 @@ from .Podcast import Podcast
 from .Episode import Episode
 from .TopArtist import TopArtist
 from Config import getCommandName, getSetting
-
-import webbrowser
-import re
-import time
+from Util import handle_spotify_uri
 
 class Play(Command):
     def __init__(self, spotify):
@@ -37,13 +34,7 @@ class Play(Command):
             return [("", "Invalid command", "Spotify", 100, 100, {})]
 
     def Run(self, data: str):
-        if(not self.spotify.current_playback()):
-            data = data.split(':')
-            webbrowser.open("https://open.spotify.com/track/" + data[2])
-        elif("track" in data or "episode" in data):
-            self.spotify.start_playback(uris=[data])
-        elif("show" in data or "artist" in data or "playlist" in data):
-            self.spotify.start_playback(context_uri=data)
+        handle_spotify_uri(self.spotify, data)
 
     def executeCommand(self, command: str):
         if(getSetting("CASE_SENSITIVE") == "False"):
