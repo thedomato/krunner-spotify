@@ -11,6 +11,8 @@ class CurrentTrackInfo(Command):
     def Match(self, query: str):
         playbackDetails = self.spotify.currently_playing(
             additional_types="episode")
+        if playbackDetails is None or playbackDetails["item"] is None:
+            return [("", "Nothing currently playing", "Spotify", 100, 100, {})]
         if(playbackDetails["item"]["type"] == "track"):
             trackName = playbackDetails["item"]["name"]
             trackArtist = playbackDetails["item"]["artists"][0]["name"]
